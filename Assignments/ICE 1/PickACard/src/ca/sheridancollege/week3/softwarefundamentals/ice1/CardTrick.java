@@ -1,32 +1,67 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @author Hamza
+ * @date Feb 8, 2021
  */
 package ca.sheridancollege.week3.softwarefundamentals.ice1;
 
-/**
- * A class that fills a magic hand of 7 cards with random Card Objects
- * and then asks the user to pick a card and searches the array of cards
- * for the match to the user's card. To be used as starting code in ICE 1
- * @author dancye
- */
+//Import statment for getting input
+import java.util.Scanner;
+
 public class CardTrick {
     
-    public static void main(String[] args)
-    {
-        Card[] magicHand = new Card[7];
+    //Constant is the predfined amount of cards in magic hand
+    final static int MAGICHANDAMOUNT = 7;
+
+    public static void main(String[] args) {
         
-        for (int i=0; i<magicHand.length; i++)
-        {
-            Card c = new Card();
-            //c.setValue(insert call to random number generator here)
-            //c.setSuit(Card.SUITS[insert call to random number between 0-3 here])
+        //Object uses default constructor to generate 52 cards which is shuffled 100 times
+        Card cards = new Card();
+        
+        //Creates a deck which is already shuffled and an empty array for magichand
+        String[] deck = cards.getDeck();
+        String[] magicHand = new String[MAGICHANDAMOUNT];
+        
+        //Scanner object for input and guessedCard for a message 
+        Scanner keyIn = new Scanner(System.in);
+        boolean guessedCard = false;
+        
+        //Gives values for magicHand by picking the cards from the top
+        for (int c = 0; c < magicHand.length; c++) {
+            magicHand[c] = deck[c];
         }
         
-        //insert code to ask the user for Card value and suit, create their card
-        // and search magicHand here
-        //Then report the result here
+        //Message introducing the game
+        System.out.println("Welcome to guess the magic hands!");
+        System.out.println("Your goal is to guess what cards are in my hands.");
+        
+        //Getting number for the card from the user
+        System.out.println("\nWhat is the number of the card\n(jack is 10, queen is 11 and king is 12)");
+        String userGuess = keyIn.nextLine();
+        
+        //Getting suites from the user
+        System.out.println("\nWhat is the suit of the card\n(Hearts.Diamonds,Spades,Clubs)");
+        userGuess = (userGuess + " " + keyIn.nextLine());
+        
+        //Uses for loop to check wheter the user picked the right card
+        for (String currentC : magicHand) {
+            if (currentC.equals(userGuess)) {
+                System.out.println("Yes one of the cards is " + userGuess);
+                guessedCard = true;
+                break;
+            }
+        }
+        
+        //Message if the user didn't guess the right card
+        if (!guessedCard) {
+            System.out.println("\nSorry you didn't guess the right card.");
+        }
+        
+        //Prints out the whole magic hand after the user guessed
+        System.out.println("\nMagic Hand:");
+        for (int c = 0; c < magicHand.length; c++) {
+            System.out.println(magicHand[c]);
+        }
+
     }
-    
+
 }
